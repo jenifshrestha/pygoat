@@ -6,27 +6,20 @@ on:
     branches: [ "main" ]
 
 jobs:
-  trivy-iac-scan:
+  trivy-image-scan:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-        # Build Docker image
       - name: Build Docker image
-        run: |
-          docker build -t pygoat:latest .
+        run: docker build -t pygoat:latest .
 
-      - name: Run Trivy Image scan
+      - name: Run Trivy Image Scan
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          scan-type: "image"
-          scan-ref: "pygoat:latest"
-        env:
-          TRIVY_SKIP_DB_UPDATE: true
-          TRIVY_SKIP_JAVA_DB_UPDATE: true
-          severity: "CRITICAL,HIGH,MEDIUM"
-          format: "table"
+          image-ref: pygoat:latest
+          format: table
+          severity: CRITICAL,HIGH,MEDIUM
           exit-code: "0"
-
