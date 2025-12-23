@@ -1,4 +1,4 @@
-name: Trivy Image Scan (CloudFormation)
+name: Trivy Image Scan
 
 on:
   workflow_dispatch:
