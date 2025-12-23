@@ -1,0 +1,27 @@
+name: Trivy Image Scan (CloudFormation)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  trivy-iac-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy Image scan
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          scan-type: "image"
+          scan-ref: "pygoat:latest"
+        env:
+          TRIVY_SKIP_DB_UPDATE: true
+          TRIVY_SKIP_JAVA_DB_UPDATE: true
+          severity: "CRITICAL,HIGH,MEDIUM"
+          format: "table"
+          exit-code: "0"
+
