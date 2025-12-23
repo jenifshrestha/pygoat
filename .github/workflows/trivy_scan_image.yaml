@@ -13,6 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+        # Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t pygoat:latest .
+
       - name: Run Trivy Image scan
         uses: aquasecurity/trivy-action@0.20.0
         with:
